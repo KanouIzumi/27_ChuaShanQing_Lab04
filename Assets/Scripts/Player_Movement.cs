@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Player_Movement : MonoBehaviour
 
     public static int coinCount;
     public int totalCoinCount;
+
+    public GameObject scoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +41,10 @@ public class Player_Movement : MonoBehaviour
     {
         if(collision.gameObject.tag == "Coin")
         {
+            coinCount ++;
             print("Get coin!");
             Destroy(collision.gameObject);
+            scoreText.GetComponent<Text>().text = "Score: " + coinCount;
         }
     }
 }
