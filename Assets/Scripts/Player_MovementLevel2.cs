@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class Player_Movement : MonoBehaviour
+public class Player_MovementLevel2 : MonoBehaviour
 {
     public float speed;
     Rigidbody PlayerRigidbody;
@@ -32,9 +32,9 @@ public class Player_Movement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Coin")
+        if (collision.gameObject.tag == "Coin")
         {
-            coinCount ++;
+            coinCount++;
             print("Get coin!");
             Destroy(collision.gameObject);
             scoreText.GetComponent<Text>().text = "Score: " + coinCount;
@@ -51,9 +51,9 @@ public class Player_Movement : MonoBehaviour
     {
         coins = GameObject.FindGameObjectsWithTag("Coin");
 
-        if(coins.Length <= 0)
+        if (coins.Length <= 0)
         {
-            SceneManager.LoadScene("GameSceneLevel2");
+            SceneManager.LoadScene("WinScene");
         }
     }
     private void LoseCondition()
@@ -61,3 +61,4 @@ public class Player_Movement : MonoBehaviour
         SceneManager.LoadScene("LoseScene");
     }
 }
+
