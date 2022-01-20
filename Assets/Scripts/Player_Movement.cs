@@ -8,9 +8,9 @@ public class Player_Movement : MonoBehaviour
 {
     public float speed;
     Rigidbody PlayerRigidbody;
+    private GameObject[] coins;
 
-    public static int coinCount;
-    public int totalCoinCount;
+    public int coinCount;
 
     public GameObject scoreText;
 
@@ -18,23 +18,16 @@ public class Player_Movement : MonoBehaviour
     void Start()
     {
         PlayerRigidbody = GetComponent<Rigidbody>();
-
-        totalCoinCount = GameObject.FindGameObjectsWithTag("Coin").Length;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
         PlayerRigidbody.AddForce(movement * speed * Time.deltaTime);
-
-        //Win condition
-        if (coinCount == totalCoinCount)
-        {
-            SceneManager.LoadScene("WinScene");
-        }
+        WinCondition();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,5 +39,25 @@ public class Player_Movement : MonoBehaviour
             Destroy(collision.gameObject);
             scoreText.GetComponent<Text>().text = "Score: " + coinCount;
         }
+
+        if (collision.gameObject.tag == "Hazard")
+        {
+            print("Got Hurt");
+            LoseCondition();
+        }
+    }
+
+    private void WinCondition()
+    {
+        coins = GameObject.FindGameObjectsWithTag("Coin");
+
+        if(coins.Length <= 0)
+        {
+            SceneManager.LoadScene("WinScene");
+        }
+    }
+    private void LoseCondition()
+    {
+        SceneManager.LoadScene("LoseScene");
     }
 }
